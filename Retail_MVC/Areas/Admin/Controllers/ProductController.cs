@@ -6,10 +6,13 @@ using Retail_MVC.Models.ViewModels;
 using System.Collections.Generic;
 using System.Data;
 using Retail_MVC.DataAccess.Data;
+using Microsoft.AspNetCore.Authorization;
+using Retail_MVC.Utility;
 
 namespace Retail_MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Vendor)]
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

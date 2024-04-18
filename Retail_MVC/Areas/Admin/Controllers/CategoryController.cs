@@ -3,10 +3,14 @@ using Retail_MVC.DataAccess.Data;
 using Retail_MVC.Models;
 using Retail_MVC.DataAccess.Repository.IRepository;
 using Retail_MVC.DataAccess.Repository;
+using Microsoft.AspNetCore.Authorization;
+using Retail_MVC.Utility;
 
 namespace Retail_MVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin+","+SD.Role_Vendor)]
+    
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

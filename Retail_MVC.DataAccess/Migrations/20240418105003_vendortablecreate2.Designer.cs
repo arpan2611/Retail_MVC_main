@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Retail_MVC.DataAccess.Data;
 
@@ -11,9 +12,11 @@ using Retail_MVC.DataAccess.Data;
 namespace Retail_MVC.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240418105003_vendortablecreate2")]
+    partial class vendortablecreate2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -361,38 +364,6 @@ namespace Retail_MVC.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("vendors");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            City = "abc1",
-                            Name = "Vendor1",
-                            PhoneNumber = "9876543210",
-                            PostalCode = "876543",
-                            State = "state1",
-                            StreetAddress = "xyz1"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            City = "abc2",
-                            Name = "Vendor2",
-                            PhoneNumber = "9876543211",
-                            PostalCode = "876542",
-                            State = "state2",
-                            StreetAddress = "xyz2"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            City = "abc3",
-                            Name = "Vendor3",
-                            PhoneNumber = "9876543212",
-                            PostalCode = "876541",
-                            State = "state3",
-                            StreetAddress = "xyz3"
-                        });
                 });
 
             modelBuilder.Entity("Retail_MVC.Models.ApplicationUser", b =>
