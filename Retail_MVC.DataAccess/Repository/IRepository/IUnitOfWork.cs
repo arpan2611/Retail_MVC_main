@@ -12,6 +12,11 @@ namespace Retail_MVC.DataAccess.Repository.IRepository
         IProductRepository Product { get; }
 
         IVendorRepository Vendor { get; }
+        IShoppingCartRepository ShoppingCart { get; }
+
+        IApplicationUserRepository ApplicationUser { get; }
+        IOrderHeaderRepository OrderHeader { get; }
+        IOrderDetailRepository OrderDetail { get; }
 
         void Save();
     }

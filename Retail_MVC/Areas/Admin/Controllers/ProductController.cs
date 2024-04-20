@@ -85,7 +85,7 @@ namespace Retail_MVC.Areas.Admin.Controllers
                 {
                     _unitOfWork.Product.Update(productVM.Product);
                 }
-                _unitOfWork.Product.Add(productVM.Product);
+                
                 _unitOfWork.Save();
                 return RedirectToAction("Index", "Product");
             }
