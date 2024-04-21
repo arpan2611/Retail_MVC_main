@@ -122,7 +122,7 @@
                                 <div class="col-9">
                                     @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Courier))
                                     {
-                                        <input asp-for="OrderHeader.Carrier" type="text" class="form-control" />
+                                        <input asp-for="OrderHeader.Carrier" id="carrier" type="text" class="form-control" />
                                     }
                                     else
                                     {
@@ -135,7 +135,7 @@
                                 <div class="col-9">
                                     @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Courier))
                                     {
-                                        <input asp-for="OrderHeader.TrackingNumber" type="text" class="form-control" />
+                                        <input asp-for="OrderHeader.TrackingNumber" id="trackingNumber" type="text" class="form-control" />
                                     }
                                     else
                                     {
@@ -233,10 +233,13 @@
                                     </div>
                                 </li>
                             </ul>
-                            @if (Model.OrderHeader.PaymentStatus == SD.PaymentStatusDelayedPayment &&
-                            Model.OrderHeader.OrderStatus == SD.StatusShipped)
+                            @if (User.IsInRole(SD.Role_Customer))
                             {
-                                <button type="submit" class="btn btn-success form-control my-1">Pay Now</button>
+                                @if (Model.OrderHeader.PaymentStatus == SD.PaymentStatusDelayedPayment &&
+                                              Model.OrderHeader.OrderStatus == SD.StatusShipped)
+                                {
+                                    <button type="submit" class="btn btn-success form-control my-1">Pay Now</button>
+                                }
                             }
                             @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Courier))
                             {
@@ -254,3 +257,31 @@
         </div>
     </div>
 </form>
+
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function validateInput() {
+            if (document.getElementById("trackingNumber").value == "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please enter tracking number!',
+                });
+                return false;
+            }
+            if (document.getElementById("carrier").value == "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please enter carrier!',
+                });
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+}

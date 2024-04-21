@@ -17,6 +17,7 @@ namespace Retail_MVC.DataAccess.Repository.IRepository
         IApplicationUserRepository ApplicationUser { get; }
         IOrderHeaderRepository OrderHeader { get; }
         IOrderDetailRepository OrderDetail { get; }
+        ICourierRepository Courier { get; }
 
         void Save();
     }
