@@ -21,11 +21,26 @@ namespace Retail_MVC.Areas.Admin.Controllers
 
         }
 
-
+        [Authorize]
         public IActionResult Index()
         {
-            List<OrderHeader> prodobj = _unitOfWork.OrderHeader.GetAll(includeProperties: "ApplicationUser").ToList();
-            return View(prodobj);
+            IEnumerable<OrderHeader> objOrderHeaders;
+
+
+            if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Courier))
+            {
+                objOrderHeaders = _unitOfWork.OrderHeader.GetAll(includeProperties: "ApplicationUser").ToList();
+            }
+            else
+            {
+
+                var claimsIdentity = (ClaimsIdentity)User.Identity;
+                var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+                objOrderHeaders = _unitOfWork.OrderHeader
+                    .GetAll(u => u.ApplicationUserId == userId, includeProperties: "ApplicationUser");
+            }
+            return View(objOrderHeaders);
         }
 
         public IActionResult Details(int orderId)
