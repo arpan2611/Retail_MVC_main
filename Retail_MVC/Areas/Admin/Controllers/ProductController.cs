@@ -52,7 +52,7 @@ namespace Retail_MVC.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Upsert(ProductVM productVM, IFormFile? file)
         {
-            productVM.Product.Id = 0;
+            //productVM.Product.Id = 0;
             if(ModelState.IsValid)
             {
                 string wwwRootPath=_webHostEnvironment.WebRootPath;

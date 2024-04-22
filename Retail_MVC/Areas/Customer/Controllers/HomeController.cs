@@ -2,8 +2,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Retail_MVC.DataAccess.Repository.IRepository;
 using Retail_MVC.Models;
+using Stripe;
 using System.Diagnostics;
 using System.Security.Claims;
+using Product = Retail_MVC.Models.Product;
 
 namespace Retail_MVC.Areas.Customer.Controllers
 {
@@ -36,6 +38,7 @@ namespace Retail_MVC.Areas.Customer.Controllers
 			
 			return View(cart);
 		}
+
         [HttpPost]
         [Authorize]
         public IActionResult Details(ShoppingCart shoppingCart)
@@ -62,10 +65,29 @@ namespace Retail_MVC.Areas.Customer.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Privacy()
+        [AllowAnonymous]
+        public IActionResult Filter(string searchString)
         {
-            return View();
+            var allProduct = _unitOfWork.Product.GetAll();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                //var filteredResult = allMovies.Where(n => n.Name.ToLower().Contains(searchString.ToLower()) || n.Description.ToLower().Contains(searchString.ToLower())).ToList();
+
+                var filteredResultNew = allProduct.Where(n => string.Equals(n.Name, searchString, StringComparison.CurrentCultureIgnoreCase)).ToList();
+
+
+                return View("Index", filteredResultNew);
+            }
+
+            return View("Index", allProduct);
         }
+
+
+            public IActionResult Privacy()
+            {
+                return View();
+            }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
